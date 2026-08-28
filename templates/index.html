@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Churn Prediction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:        #0B1220;
+    --panel:      #101A2E;
+    --panel-2:    #0D1626;
+    --panel-line: rgba(231,236,245,0.08);
+    --text:       #E7ECF5;
+    --muted:      #8793A8;
+    --amber:      #F2A93B;
+    --teal:       #3ECF8E;
+    --display: 'Fraunces', serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, var(--panel-line) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, var(--panel-line) 40px),
+      var(--ink);
+    color:var(--text);
+    font-family:var(--body);
+  }
+
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:48px 32px 80px;
+  }
+
+  .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.16em;
+    color:var(--muted);
+    text-transform:uppercase;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 4px rgba(62,207,142,0.15);
+    flex-shrink:0;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:20px;
+    padding:56px;
+    opacity:0;
+    animation:rise 0.7s ease forwards;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  h1{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(32px, 4vw, 48px);
+    line-height:1.12;
+    letter-spacing:-0.01em;
+    margin:0 0 20px;
+  }
+  h1 em{ font-style:italic; color:var(--amber); }
+
+  .lede{
+    font-size:16.5px;
+    line-height:1.65;
+    color:var(--muted);
+    max-width:46ch;
+    margin:0 0 34px;
+  }
+
+  .cta-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:16px;
+  }
+
+  .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--text);
+    color:var(--ink);
+    font-weight:600;
+    font-size:15px;
+    padding:14px 24px;
+    border-radius:10px;
+    text-decoration:none;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cta:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,0.35); }
+  .cta:focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+  .cta svg{ width:16px; height:16px; }
+
+  .cta-ghost{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--muted);
+    font-size:14px;
+    font-weight:500;
+    text-decoration:none;
+    padding:14px 6px;
+    border-bottom:1px solid transparent;
+    transition:color 0.15s ease, border-color 0.15s ease;
+  }
+  .cta-ghost:hover{ color:var(--text); border-color:var(--panel-line); }
+  .cta-ghost:focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+
+  .cta-note{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    margin:14px 0 0;
+  }
+
+  .stats{
+    display:flex;
+    margin-top:44px;
+    border-top:1px solid var(--panel-line);
+    padding-top:22px;
+  }
+  .stat{ flex:1; padding-right:20px; border-right:1px solid var(--panel-line); }
+  .stat:last-child{ border-right:none; padding-right:0; }
+  .stat + .stat{ padding-left:20px; }
+  .stat .label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .stat .value{ font-family:var(--mono); font-size:14px; color:var(--text); }
+
+  /* ---------- radar ---------- */
+  .radar-wrap{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .radar{ width:100%; max-width:320px; aspect-ratio:1/1; }
+  .ring{ fill:none; stroke:var(--panel-line); stroke-width:1; }
+  .sweep-group{ transform-origin:200px 200px; animation:spin 6s linear infinite; }
+  .sweep-line{ stroke:url(#sweepGradient); stroke-width:2; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .dot{ animation:pulse 2.6s ease-in-out infinite; }
+  .dot.amber{ fill:var(--amber); }
+  .dot.teal{ fill:var(--teal); }
+  @keyframes pulse{
+    0%,100%{ opacity:0.55; r:4; }
+    50%{ opacity:1; r:5.5; }
+  }
+  .legend{ display:flex; gap:22px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+  .legend span{ display:inline-flex; align-items:center; gap:7px; }
+  .legend i{ width:8px; height:8px; border-radius:50%; display:inline-block; }
+  .legend i.amber{ background:var(--amber); }
+  .legend i.teal{ background:var(--teal); }
+
+  /* ---------- how it works ---------- */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin:64px 0 24px;
+  }
+  .section-head h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:24px;
+    margin:0;
+  }
+  .section-head span{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .signals{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--panel-line);
+    border:1px solid var(--panel-line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .signal{
+    background:var(--panel-2);
+    padding:26px 24px;
+  }
+  .signal .num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--amber);
+    margin-bottom:14px;
+  }
+  .signal h3{
+    font-size:15px;
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .signal p{
+    font-size:13.5px;
+    line-height:1.55;
+    color:var(--muted);
+    margin:0;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:56px;
+    padding-top:24px;
+    border-top:1px solid var(--panel-line);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .sweep-group, .dot, .hero{ animation:none; opacity:1; }
+  }
+
+  @media (max-width:860px){
+    .wrap{ padding:32px 20px 56px; }
+    .hero{ grid-template-columns:1fr; padding:36px 26px; gap:36px; }
+    .radar-wrap{ order:-1; }
+    .stats{ flex-wrap:wrap; row-gap:18px; }
+    .stat{ flex:1 1 45%; border-right:none; padding:0; }
+    .signals{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:520px){
+    .signals{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="eyebrow">Retention signal &mdash; live</p>
+
+    <div class="hero">
+      <div>
+        <h1>Know who's<br>leaving <em>before</em><br>they do.</h1>
+        <p class="lede">
+          A gradient boosting model reads usage, billing, and support patterns
+          across your accounts and flags the ones drifting toward churn &mdash;
+          while there's still time to reach them.
+        </p>
+
+        <div class="cta-row">
+          <a href="/customer_churn_prediction" class="cta" id="predict-btn">
+            Customer Churn Prediction
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#how-it-works" class="cta-ghost">See how it works</a>
+        </div>
+        <p class="cta-note">Enter one account's details, get an instant risk read.</p>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Model</div>
+            <div class="value">Gradient Boosting</div>
+          </div>
+          <div class="stat">
+            <div class="label">Signals read</div>
+            <div class="value">Tenure · billing · usage · support</div>
+          </div>
+          <div class="stat">
+            <div class="label">Output</div>
+            <div class="value">Churn risk, per account</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="radar-wrap">
+        <svg class="radar" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="sweepGradient" cx="0%" cy="0%" r="100%">
+              <stop offset="0%" stop-color="#3ECF8E" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#3ECF8E" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <circle class="ring" cx="200" cy="200" r="60"/>
+          <circle class="ring" cx="200" cy="200" r="120"/>
+          <circle class="ring" cx="200" cy="200" r="180"/>
+
+          <g class="sweep-group">
+            <line class="sweep-line" x1="200" y1="200" x2="200" y2="20"/>
+          </g>
+
+          <circle class="dot teal" cx="200" cy="150" r="4.5" style="animation-delay:0s"/>
+          <circle class="dot teal" cx="165" cy="215" r="4.5" style="animation-delay:0.4s"/>
+          <circle class="dot teal" cx="235" cy="220" r="4.5" style="animation-delay:0.8s"/>
+          <circle class="dot teal" cx="200" cy="255" r="4.5" style="animation-delay:1.2s"/>
+          <circle class="dot teal" cx="175" cy="180" r="4.5" style="animation-delay:0.2s"/>
+
+          <circle class="dot amber" cx="200" cy="95" r="5" style="animation-delay:0.3s"/>
+          <circle class="dot amber" cx="300" cy="180" r="5" style="animation-delay:0.9s"/>
+          <circle class="dot amber" cx="120" cy="270" r="5" style="animation-delay:1.5s"/>
+          <circle class="dot amber" cx="290" cy="290" r="5" style="animation-delay:0.6s"/>
+        </svg>
+
+        <div class="legend">
+          <span><i class="teal"></i> Retained</span>
+          <span><i class="amber"></i> At risk</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="how-it-works">
+      <div class="section-head">
+        <h2>What the model reads</h2>
+        <span>04 signal groups</span>
+      </div>
+      <div class="signals">
+        <div class="signal">
+          <div class="num">01</div>
+          <h3>Tenure</h3>
+          <p>How long the account has been active, and how that compares to when similar accounts churned.</p>
+        </div>
+        <div class="signal">
+          <div class="num">02</div>
+          <h3>Billing</h3>
+          <p>Contract type, monthly charges, and payment behavior &mdash; early indicators of price sensitivity.</p>
+        </div>
+        <div class="signal">
+          <div class="num">03</div>
+          <h3>Usage</h3>
+          <p>Which services the account actually uses, and whether that engagement is rising or fading.</p>
+        </div>
+        <div class="signal">
+          <div class="num">04</div>
+          <h3>Support</h3>
+          <p>Ticket frequency and recent complaints, which often precede a decision to leave.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>Customer Churn Prediction System</span>
+      <span>Model: Gradient Boosting Classifier</span>
+    </footer>
+  </div>
+</body>
+</html>
