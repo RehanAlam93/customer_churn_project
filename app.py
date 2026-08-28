@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 import joblib
 import numpy as np
-import datetime
 
 app = Flask(__name__)
 
@@ -9,24 +8,24 @@ app = Flask(__name__)
 model = joblib.load('model/gradient_boosting_churn_model.pkl')
 scaler = joblib.load('model/scaler.pkl')
 
-# Home route index.html
+# home route index.html
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Form page churn.html
+# form page churn.html
 @app.route('/customer_churn_prediction')
 def form_page():
     return render_template('churn.html')
 
-# Predict churn risk after taking data from churn.html
+# predict churn risk after taking data from churn.html
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Collect customer name
+        # collect customer name
         customer_name = request.form.get('full_name', 'Unknown Customer')
         
-        # Take all feature values
+        # take all feature values
         gender = float(request.form['gender'])
         senior_citizen = float(request.form['SeniorCitizen'])
         partner = float(request.form['Partner'])
@@ -47,7 +46,7 @@ def predict():
         monthly_charges = float(request.form['MonthlyCharges'])
         total_charges = float(request.form['TotalCharges'])
         
-        # Make array and scale features
+        # make array and scale features
         features = np.array([[gender, senior_citizen, partner, dependents, tenure, 
                               phone_service, multiple_lines, internet_service, 
                               online_security, online_backup, device_protection, 
@@ -57,10 +56,10 @@ def predict():
         
         scaled_features = scaler.transform(features)
         
-        # Find prediction
+        # find prediction
         prediction = model.predict(scaled_features)
         
-        # Set result format
+        # set result format
         if prediction[0] == 1:
             churn_risk = "Yes"
         else:
@@ -68,14 +67,7 @@ def predict():
             
         output = f"Customer Name: {customer_name} | Churn Risk: {churn_risk}"
 
-        # Store record in local CSV file and print to terminal
-        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = f"{current_time}, {customer_name}, {churn_risk}\n"
-        
-        with open("customer_predictions.csv", "a") as log_file:
-            log_file.write(log_entry)
-
-        # Terminal print format
+        # Terminal print format (CSV saving has been removed)
         print(f"Data : {customer_name} --> {output}")
 
         return render_template('churn.html', prediction_text=output)
