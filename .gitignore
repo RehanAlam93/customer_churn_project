@@ -1,2 +1,5 @@
 # ignore churn_env with inside file
 churn_env/
+
+# ignore file 
+customer_predictions.csv
