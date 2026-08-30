@@ -180,7 +180,7 @@
     <!-- Form Card -->
     <div class="form-card">
       <h2>Customer Parameter Input</h2>
-      <div class="form-subtitle">Provide customer account details to run the Gradient Boosting prediction model.</div>
+      <div class="form-subtitle">Provide customer account details to run the Random Forest prediction model.</div>
 
       <form action="/predict" method="POST">
         <div class="grid-2">
@@ -191,135 +191,10 @@
             <input type="text" id="full_name" name="full_name" placeholder="e.g. John Doe" required>
           </div>
 
-          <!-- Gender -->
-          <div class="form-group">
-            <label for="gender">Gender</label>
-            <select id="gender" name="gender" required>
-              <option value="1">Male (1)</option>
-              <option value="0">Female (0)</option>
-            </select>
-          </div>
-
-          <!-- Senior Citizen -->
-          <div class="form-group">
-            <label for="SeniorCitizen">Senior Citizen</label>
-            <select id="SeniorCitizen" name="SeniorCitizen" required>
-              <option value="0">No (0)</option>
-              <option value="1">Yes (1)</option>
-            </select>
-          </div>
-
-          <!-- Partner -->
-          <div class="form-group">
-            <label for="Partner">Partner</label>
-            <select id="Partner" name="Partner" required>
-              <option value="0">No (0)</option>
-              <option value="1">Yes (1)</option>
-            </select>
-          </div>
-
-          <!-- Dependents -->
-          <div class="form-group">
-            <label for="Dependents">Dependents</label>
-            <select id="Dependents" name="Dependents" required>
-              <option value="0">No (0)</option>
-              <option value="1">Yes (1)</option>
-            </select>
-          </div>
-
           <!-- Tenure -->
           <div class="form-group">
             <label for="tenure">Tenure (Months)</label>
             <input type="number" id="tenure" name="tenure" placeholder="e.g. 12" required>
-          </div>
-
-          <!-- Phone Service -->
-          <div class="form-group">
-            <label for="PhoneService">Phone Service</label>
-            <select id="PhoneService" name="PhoneService" required>
-              <option value="0">No (0)</option>
-              <option value="1">Yes (1)</option>
-            </select>
-          </div>
-
-          <!-- Multiple Lines -->
-          <div class="form-group">
-            <label for="MultipleLines">Multiple Lines</label>
-            <select id="MultipleLines" name="MultipleLines" required>
-              <option value="0">No Phone Service (0)</option>
-              <option value="1">No (1)</option>
-              <option value="2">Yes (2)</option>
-            </select>
-          </div>
-
-          <!-- Internet Service -->
-          <div class="form-group">
-            <label for="InternetService">Internet Service</label>
-            <select id="InternetService" name="InternetService" required>
-              <option value="1">DSL (1)</option>
-              <option value="2">Fiber Optic (2)</option>
-              <option value="0">No (0)</option>
-            </select>
-          </div>
-
-          <!-- Online Security -->
-          <div class="form-group">
-            <label for="OnlineSecurity">Online Security</label>
-            <select id="OnlineSecurity" name="OnlineSecurity" required>
-              <option value="0">No (0)</option>
-              <option value="1">No Internet Service (1)</option>
-              <option value="2">Yes (2)</option>
-            </select>
-          </div>
-
-          <!-- Online Backup -->
-          <div class="form-group">
-            <label for="OnlineBackup">Online Backup</label>
-            <select id="OnlineBackup" name="OnlineBackup" required>
-              <option value="0">No Internet Service (0)</option>
-              <option value="1">No (1)</option>
-              <option value="2">Yes (2)</option>
-            </select>
-          </div>
-
-          <!-- Device Protection -->
-          <div class="form-group">
-            <label for="DeviceProtection">Device Protection</label>
-            <select id="DeviceProtection" name="DeviceProtection" required>
-              <option value="0">No Internet Service (0)</option>
-              <option value="1">No (1)</option>
-              <option value="2">Yes (2)</option>
-            </select>
-          </div>
-
-          <!-- Tech Support -->
-          <div class="form-group">
-            <label for="TechSupport">Tech Support</label>
-            <select id="TechSupport" name="TechSupport" required>
-              <option value="0">No Internet Service (0)</option>
-              <option value="1">No (1)</option>
-              <option value="2">Yes (2)</option>
-            </select>
-          </div>
-
-          <!-- Streaming TV -->
-          <div class="form-group">
-            <label for="StreamingTV">Streaming TV</label>
-            <select id="StreamingTV" name="StreamingTV" required>
-              <option value="0">No Internet Service (0)</option>
-              <option value="1">No (1)</option>
-              <option value="2">Yes (2)</option>
-            </select>
-          </div>
-
-          <!-- Streaming Movies -->
-          <div class="form-group">
-            <label for="StreamingMovies">Streaming Movies</label>
-            <select id="StreamingMovies" name="StreamingMovies" required>
-              <option value="0">No Internet Service (0)</option>
-              <option value="1">No (1)</option>
-              <option value="2">Yes (2)</option>
-            </select>
           </div>
 
           <!-- Contract -->
@@ -329,26 +204,6 @@
               <option value="0">Month-to-Month (0)</option>
               <option value="1">One Year (1)</option>
               <option value="2">Two Year (2)</option>
-            </select>
-          </div>
-
-          <!-- Paperless Billing -->
-          <div class="form-group">
-            <label for="PaperlessBilling">Paperless Billing</label>
-            <select id="PaperlessBilling" name="PaperlessBilling" required>
-              <option value="0">No (0)</option>
-              <option value="1">Yes (1)</option>
-            </select>
-          </div>
-
-          <!-- Payment Method -->
-          <div class="form-group" style="grid-column: span 2;">
-            <label for="PaymentMethod">Payment Method</label>
-            <select id="PaymentMethod" name="PaymentMethod" required>
-              <option value="0">Electronic Check (0)</option>
-              <option value="1">Mailed Check (1)</option>
-              <option value="2">Bank Transfer (automatic) (2)</option>
-              <option value="3">Credit Card (automatic) (3)</option>
             </select>
           </div>
 
@@ -379,16 +234,13 @@
   </div>
 
 <script>
-  // 1. Full Name validation: Sirf letters aur spaces allow karne ke liye
   const nameInput = document.getElementById('full_name');
   if (nameInput) {
     nameInput.addEventListener('input', function() {
-      // Jo bhi character letter ya space nahi hoga, use automatically hata dega
       this.value = this.value.replace(/[^A-Za-z\s]/g, '');
     });
   }
 
-  // 2. Number inputs ke liye scroll aur negative signs rokne ke liye
   document.querySelectorAll('input[type="number"]').forEach(input => {
     input.addEventListener('wheel', function(event) {
       event.preventDefault();

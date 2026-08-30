@@ -4,75 +4,60 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Load the trained model and scaler
-model = joblib.load('model/gradient_boosting_churn_model.pkl')
-scaler = joblib.load('model/scaler.pkl')
+# Load the trained machine learning model and scaler from the EDA folder
+model = joblib.load(r'EDA/random_forest_churn_model.pkl')
+scaler = joblib.load(r'EDA/scaler.pkl')
 
-# home route index.html
+# Home route for index.html
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# form page churn.html
+# Form page route for churn.html
 @app.route('/customer_churn_prediction')
 def form_page():
     return render_template('churn.html')
 
-# predict churn risk after taking data from churn.html
+# Predict churn risk after collecting data from the web form
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # collect customer name
+        # Collect customer name from the form input
         customer_name = request.form.get('full_name', 'Unknown Customer')
         
-        # take all feature values
-        gender = float(request.form['gender'])
-        senior_citizen = float(request.form['SeniorCitizen'])
-        partner = float(request.form['Partner'])
-        dependents = float(request.form['Dependents'])
+        # Collect all required feature values
         tenure = float(request.form['tenure'])
-        phone_service = float(request.form['PhoneService'])
-        multiple_lines = float(request.form['MultipleLines'])
-        internet_service = float(request.form['InternetService'])
-        online_security = float(request.form['OnlineSecurity'])
-        online_backup = float(request.form['OnlineBackup'])
-        device_protection = float(request.form['DeviceProtection'])
-        tech_support = float(request.form['TechSupport'])
-        streaming_tv = float(request.form['StreamingTV'])
-        streaming_movies = float(request.form['StreamingMovies'])
         contract = float(request.form['Contract'])
-        paperless_billing = float(request.form['PaperlessBilling'])
-        payment_method = float(request.form['PaymentMethod'])
         monthly_charges = float(request.form['MonthlyCharges'])
         total_charges = float(request.form['TotalCharges'])
         
-        # make array and scale features
-        features = np.array([[gender, senior_citizen, partner, dependents, tenure, 
-                              phone_service, multiple_lines, internet_service, 
-                              online_security, online_backup, device_protection, 
-                              tech_support, streaming_tv, streaming_movies, 
-                              contract, paperless_billing, payment_method, 
-                              monthly_charges, total_charges]])
+        # Create an array of features and apply the trained scaler
+        features = np.array([[tenure, 
+                            contract,
+                            monthly_charges,
+                            total_charges]])
         
         scaled_features = scaler.transform(features)
         
-        # find prediction
+        # Run prediction using the random forest model
         prediction = model.predict(scaled_features)
         
-        # set result format
+        # Map numerical prediction to readable text ('Yes' or 'No')
         if prediction[0] == 1:
             churn_risk = "Yes"
         else:
             churn_risk = "No"
             
+        # Format the output for the web page template
         output = f"Customer Name: {customer_name} | Churn Risk: {churn_risk}"
 
-        # Terminal print format (CSV saving has been removed)
-        print(f"Data : {customer_name} --> {output}")
+        # Print the result in your requested format to the VS Code terminal
+        print(f"Data : Name : {customer_name} , Preduction --> \"{churn_risk}\"")
 
         return render_template('churn.html', prediction_text=output)
 
     except Exception as e:
+        # Handle exceptions and print errors if any occur
         print(f"Error: {str(e)}")
         return render_template('churn.html', prediction_text=f"Error: {str(e)}")
 
