@@ -4,37 +4,6 @@ An end-to-end Machine Learning project that predicts whether a telecom customer 
 
 This project covers the complete Machine Learning lifecycle, including **data cleaning, data processing, exploratory data analysis (EDA), data visualization, feature selection, class imbalance handling using SMOTE, multiple model comparison, Random Forest model selection, Top 10 feature selection, model saving, and Flask deployment**.
 
----
-
-## 📌 Table of Contents
-
-- [Project Overview](#-project-overview)
-- [Objectives](#-objectives)
-- [Dataset](#-dataset)
-- [Project Workflow](#-project-workflow)
-- [Data Cleaning](#-data-cleaning)
-- [Exploratory Data Analysis](#-exploratory-data-analysis)
-- [Data Visualization](#-data-visualization)
-- [Data Processing](#-data-processing)
-- [Handling Class Imbalance](#-handling-class-imbalance)
-- [Machine Learning Models](#-machine-learning-models)
-- [Model Evaluation](#-model-evaluation)
-- [Random Forest Model](#-random-forest-model)
-- [Top 10 Features](#-top-10-features)
-- [Flask Web Application](#-flask-web-application)
-- [Prediction Process](#-prediction-process)
-- [Prediction Logging](#-prediction-logging)
-- [Project Structure](#-project-structure)
-- [Technologies Used](#-technologies-used)
-- [Installation](#-installation)
-- [Running the Application](#-running-the-application)
-- [Example](#-example)
-- [Key Learning Outcomes](#-key-learning-outcomes)
-- [Future Improvements](#-future-improvements)
-- [Author](#-author)
-
----
-
 # 🚀 Project Overview
 
 Customer churn is a major challenge for telecommunication companies. Losing customers can directly affect revenue and business growth.
@@ -101,15 +70,14 @@ The dataset contains information about telecom customers and their services.
 - Total charges
 - Churn
 
-### Target Variable
+## Target Variable
 
 The target variable is:
 
 ```text
 Churn
 
-
-### froject workflow
+# project workflow
                  RAW DATASET
                       │
                       ▼
@@ -165,7 +133,7 @@ Churn
              PREDICTION LOGGING
 
 
-### prediction process
+# prediction process
 
 User enters customer information
             ↓
@@ -186,7 +154,7 @@ User enters customer information
     Display Result
 
 
-### project structure
+# project structure
 
 Customer_churn_project/
 │
