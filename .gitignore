@@ -1,5 +1,3 @@
-# ignore churn_env with inside file
+# ignore a folder with inside data
 churn_env/
 
-# ignore file 
-customer_predictions.csv
