@@ -38,7 +38,7 @@
   }
 
   .form-container {
-    max-width: 850px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
@@ -180,7 +180,7 @@
     <!-- Form Card -->
     <div class="form-card">
       <h2>Customer Parameter Input</h2>
-      <div class="form-subtitle">Provide customer account details to run the Random Forest prediction model.</div>
+      <div class="form-subtitle">Provide customer account details to run the prediction model.</div>
 
       <form action="/predict" method="POST">
         <div class="grid-2">
@@ -191,13 +191,62 @@
             <input type="text" id="full_name" name="full_name" placeholder="e.g. John Doe" required>
           </div>
 
-          <!-- Tenure -->
+          <!-- 1. gender (Female:0, Male:1) -->
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="0">Female (0)</option>
+              <option value="1">Male (1)</option>
+            </select>
+          </div>
+
+          <!-- 2. tenure (Months) -->
           <div class="form-group">
             <label for="tenure">Tenure (Months)</label>
             <input type="number" id="tenure" name="tenure" placeholder="e.g. 12" required>
           </div>
 
-          <!-- Contract -->
+          <!-- 3. MultipleLines (No Phone Service:0, No:1, Yes:2) -->
+          <div class="form-group">
+            <label for="MultipleLines">Multiple Lines</label>
+            <select id="MultipleLines" name="MultipleLines" required>
+              <option value="0">No Phone Service (0)</option>
+              <option value="1">No (1)</option>
+              <option value="2">Yes (2)</option>
+            </select>
+          </div>
+
+          <!-- 4. InternetService (No:0, DSL:1, Fiber Optic:2) -->
+          <div class="form-group">
+            <label for="InternetService">Internet Service</label>
+            <select id="InternetService" name="InternetService" required>
+              <option value="0">No (0)</option>
+              <option value="1">DSL (1)</option>
+              <option value="2">Fiber Optic (2)</option>
+            </select>
+          </div>
+
+          <!-- 5. OnlineSecurity (No Internet Service:0, No:1, Yes:2) -->
+          <div class="form-group">
+            <label for="OnlineSecurity">Online Security</label>
+            <select id="OnlineSecurity" name="OnlineSecurity" required>
+              <option value="0">No Internet Service (0)</option>
+              <option value="1">No (1)</option>
+              <option value="2">Yes (2)</option>
+            </select>
+          </div>
+
+          <!-- 6. OnlineBackup (No Internet Service:0, No:1, Yes:2) -->
+          <div class="form-group">
+            <label for="OnlineBackup">Online Backup</label>
+            <select id="OnlineBackup" name="OnlineBackup" required>
+              <option value="0">No Internet Service (0)</option>
+              <option value="1">No (1)</option>
+              <option value="2">Yes (2)</option>
+            </select>
+          </div>
+
+          <!-- 7. Contract (Month-to-Month:0, One Year:1, Two Year:2) -->
           <div class="form-group">
             <label for="Contract">Contract Type</label>
             <select id="Contract" name="Contract" required>
@@ -207,13 +256,24 @@
             </select>
           </div>
 
-          <!-- Monthly Charges -->
+          <!-- 8. PaymentMethod (Electronic check:0, Mailed check:1, Bank transfer:2, Credit card:3) -->
+          <div class="form-group">
+            <label for="PaymentMethod">Payment Method</label>
+            <select id="PaymentMethod" name="PaymentMethod" required>
+              <option value="0">Electronic Check (0)</option>
+              <option value="1">Mailed Check (1)</option>
+              <option value="2">Bank Transfer (automatic) (2)</option>
+              <option value="3">Credit Card (automatic) (3)</option>
+            </select>
+          </div>
+
+          <!-- 9. MonthlyCharges -->
           <div class="form-group">
             <label for="MonthlyCharges">Monthly Charges ($)</label>
             <input type="number" step="0.01" id="MonthlyCharges" name="MonthlyCharges" placeholder="e.g. 70.50" required>
           </div>
 
-          <!-- Total Charges -->
+          <!-- 10. TotalCharges -->
           <div class="form-group">
             <label for="TotalCharges">Total Charges ($)</label>
             <input type="number" step="0.01" id="TotalCharges" name="TotalCharges" placeholder="e.g. 850.00" required>
