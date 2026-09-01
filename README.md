@@ -1,147 +1,218 @@
-# customer_churn_project
-A Customer Churn Prediction project built using Python and Machine Learning to identify customers who are likely to leave a business. The project includes data cleaning, exploratory data analysis (EDA), feature engineering, model training, evaluation, and prediction.  
-# Customer Churn Prediction
+# 📉 ChurnIQ — Customer Churn Prediction
 
-A Machine Learning project that predicts whether a customer is likely to churn (leave a service) based on historical customer data. This project demonstrates an end-to-end machine learning workflow, including data preprocessing, exploratory data analysis (EDA), feature engineering, model training, evaluation, and prediction.
+An end-to-end Machine Learning project that predicts whether a telecom customer is likely to churn.
 
----
-
-## 📌 Project Overview
-
-Customer churn is a major challenge for businesses, as retaining existing customers is often more cost-effective than acquiring new ones. This project aims to build a predictive model that identifies customers who are at risk of churning, enabling businesses to take proactive retention measures.
+This project covers the complete Machine Learning lifecycle, including **data cleaning, data processing, exploratory data analysis (EDA), data visualization, feature selection, class imbalance handling using SMOTE, multiple model comparison, Random Forest model selection, Top 10 feature selection, model saving, and Flask deployment**.
 
 ---
 
-## 🚀 Features
+## 📌 Table of Contents
 
-- Data Cleaning and Preprocessing
-- Exploratory Data Analysis (EDA)
-- Feature Engineering
-- Handling Missing Values
-- Encoding Categorical Variables
-- Model Training and Evaluation
-- Performance Comparison of Machine Learning Models
-- Customer Churn Prediction
+- [Project Overview](#-project-overview)
+- [Objectives](#-objectives)
+- [Dataset](#-dataset)
+- [Project Workflow](#-project-workflow)
+- [Data Cleaning](#-data-cleaning)
+- [Exploratory Data Analysis](#-exploratory-data-analysis)
+- [Data Visualization](#-data-visualization)
+- [Data Processing](#-data-processing)
+- [Handling Class Imbalance](#-handling-class-imbalance)
+- [Machine Learning Models](#-machine-learning-models)
+- [Model Evaluation](#-model-evaluation)
+- [Random Forest Model](#-random-forest-model)
+- [Top 10 Features](#-top-10-features)
+- [Flask Web Application](#-flask-web-application)
+- [Prediction Process](#-prediction-process)
+- [Prediction Logging](#-prediction-logging)
+- [Project Structure](#-project-structure)
+- [Technologies Used](#-technologies-used)
+- [Installation](#-installation)
+- [Running the Application](#-running-the-application)
+- [Example](#-example)
+- [Key Learning Outcomes](#-key-learning-outcomes)
+- [Future Improvements](#-future-improvements)
+- [Author](#-author)
 
 ---
 
-## 🛠️ Tech Stack
+# 🚀 Project Overview
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Scikit-learn
-- Jupyter Notebook
+Customer churn is a major challenge for telecommunication companies. Losing customers can directly affect revenue and business growth.
+
+The goal of this project is to build a Machine Learning model that can predict whether a customer is likely to **churn** or **stay** based on their account and service information.
+
+The project starts with a raw telecom customer dataset and goes through data cleaning, analysis, visualization, preprocessing, model training, feature selection, and finally deployment as a web application.
+
+The final application uses a **Random Forest Classifier** with the **Top 10 important features** and provides real-time predictions through a Flask web interface.
 
 ---
 
-## 📂 Project Structure
+# 🎯 Objectives
 
-```
-Customer_Churn_Project/
+The main objectives of this project are:
+
+- Perform data cleaning and preprocessing.
+- Understand the dataset using Exploratory Data Analysis.
+- Analyze customer churn patterns.
+- Visualize important relationships in the dataset.
+- Use Matplotlib and Seaborn for data visualization.
+- Create correlation heatmaps.
+- Analyze distributions and outliers using boxplots.
+- Process categorical and numerical features.
+- Handle class imbalance using SMOTE.
+- Train multiple Machine Learning classification models.
+- Compare different models using evaluation metrics.
+- Select the Random Forest model.
+- Analyze feature importance.
+- Select the Top 10 important features.
+- Train the final Machine Learning model.
+- Save the trained model using Joblib.
+- Deploy the model using Flask.
+- Generate real-time churn predictions.
+- Log predictions into a CSV file.
+
+---
+
+# 📊 Dataset
+
+The project uses the **Telco Customer Churn dataset**.
+
+The dataset contains information about telecom customers and their services.
+
+### Dataset includes information such as:
+
+- Customer gender
+- Senior citizen status
+- Partner
+- Dependents
+- Tenure
+- Phone service
+- Multiple lines
+- Internet service
+- Online security
+- Online backup
+- Device protection
+- Tech support
+- Streaming services
+- Contract
+- Paperless billing
+- Payment method
+- Monthly charges
+- Total charges
+- Churn
+
+### Target Variable
+
+The target variable is:
+
+```text
+Churn
+
+
+### froject workflow
+                 RAW DATASET
+                      │
+                      ▼
+               DATA CLEANING
+                      │
+                      ▼
+              DATA PROCESSING
+                      │
+                      ▼
+             EXPLORATORY DATA
+                  ANALYSIS
+                      │
+                      ▼
+              DATA VISUALIZATION
+                      │
+                      ▼
+             FEATURE ENGINEERING
+                      │
+                      ▼
+              TRAIN / TEST SPLIT
+                      │
+                      ▼
+                  SMOTE
+                      │
+                      ▼
+            MULTIPLE ML MODELS
+                      │
+                      ▼
+             MODEL COMPARISON
+                      │
+                      ▼
+             RANDOM FOREST
+                      │
+                      ▼
+           FEATURE IMPORTANCE
+                      │
+                      ▼
+             TOP 10 FEATURES
+                      │
+                      ▼
+             FINAL MODEL
+                      │
+                      ▼
+             MODEL SERIALIZATION
+                      │
+                      ▼
+             FLASK APPLICATION
+                      │
+                      ▼
+          REAL-TIME PREDICTION
+                      │
+                      ▼
+             PREDICTION LOGGING
+
+
+### prediction process
+
+User enters customer information
+            ↓
+       HTML Form
+            ↓
+       Flask Backend
+            ↓
+   Convert Input Values
+            ↓
+      Feature Ordering
+            ↓
+      StandardScaler
+            ↓
+    Random Forest Model
+            ↓
+      Churn Prediction
+            ↓
+    Display Result
+
+
+### project structure
+
+Customer_churn_project/
+│
+├── churn_env/
 │
 ├── data/
-│   └── customer_churn.csv
+│   ├── customer_churn_cleaned.csv
+│   ├── Final_data.csv
+│   └── Telco-Customer-Churn.csv
 │
-├── notebooks/
-│   └── customer_churn.ipynb
+├── data_clean_t.../
+│   └── customer_churn...
 │
-├── models/
-│   └── churn_model.pkl
+├── EDA/
+│   ├── customer_churn_rf_model.pkl
+│   └── scaler.pkl
 │
-├── requirements.txt
+├── static/
+│
+├── templates/
+│   ├── churn.html
+│   └── index.html
+│
+├── .gitignore
+├── app.py
 ├── README.md
-└── .gitignore
-```
+└── requirements.txt
 
----
 
-## 📊 Project Workflow
-
-1. Load the dataset
-2. Perform data cleaning and preprocessing
-3. Conduct Exploratory Data Analysis (EDA)
-4. Handle missing values and encode categorical features
-5. Split the dataset into training and testing sets
-6. Train multiple machine learning models
-7. Evaluate model performance
-8. Save the best-performing model
-9. Predict customer churn
-
----
-
-## 📈 Model Evaluation
-
-The model is evaluated using the following metrics:
-
-- Accuracy
-- Precision
-- Recall
-- F1-Score
-- ROC-AUC Score
-- Confusion Matrix
-
----
-
-## 📦 Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/your-username/customer-churn-project.git
-```
-
-Navigate to the project directory:
-
-```bash
-cd customer-churn-project
-```
-
-Install the required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## ▶️ Usage
-
-Run the Jupyter Notebook:
-
-```bash
-jupyter notebook
-```
-
-Open the notebook and execute all cells to preprocess the data, train the model, and generate predictions.
-
----
-
-## 📌 Future Improvements
-
-- Hyperparameter tuning
-- Deploy the model using Flask or FastAPI
-- Build an interactive Streamlit dashboard
-- Implement cross-validation
-- Add feature importance visualization
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to fork this repository, create a new branch, and submit a pull request.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-## 👨‍💻 Author
-
-**Rehan Alam**
-
-If you found this project helpful, don't forget to ⭐ star the repository!
